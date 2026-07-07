@@ -1,181 +1,225 @@
-## Week 3 Snapshot · Code Snippets
-**Control Flow: Loops + Generators**
+# Week 3 Snapshot: Control Flow — Loops
 
-### 1. for Loop กับ `range()`
+## ทำไมเราต้องมี Loops?
 
-`range()` ใช้กำหนดจำนวนรอบการวนซ้ำได้ 3 แบบ: กำหนดแค่จุดสิ้นสุด, กำหนดจุดเริ่ม-จุดสิ้นสุด, หรือกำหนดขั้นกระโดด (step) เพิ่มเติม
+ลองนึกภาพว่าอยากพิมพ์คำว่า "สวัสดี" ออกมา 100 ครั้ง ถ้าไม่มี loop เราต้องเขียน `print("สวัสดี")` ซ้ำ 100 บรรทัด! Loop ช่วยให้เราสั่งให้คอมพิวเตอร์ทำงานซ้ำๆ โดยเขียนโค้ดแค่ครั้งเดียว เหมาะกับงานที่ต้อง**ทำซ้ำ**หรือ**ประมวลผลข้อมูลจำนวนมาก**
 
 ```python
-# range(stop): เริ่มจาก 0 ถึงก่อน stop
-for i in range(5):
-    print(f"รอบที่ {i}")
-# Output: 0, 1, 2, 3, 4
+# ไม่มี loop (แย่มาก อย่าทำแบบนี้)
+print("สวัสดี")
+print("สวัสดี")
+print("สวัสดี")
+# ... ซ้ำไปเรื่อยๆ 100 ครั้ง
 
-# range(start, stop): เริ่มจาก start ถึงก่อน stop
-for num in range(1, 11):
-    print(num)
-# Output: 1 ถึง 10
-
-# range(start, stop, step): กระโดดทีละ step
-for even_num in range(0, 11, 2):
-    print(even_num)
-# Output: 0, 2, 4, 6, 8, 10
+# มี loop (ดีกว่ามาก)
+for i in range(100):
+    print("สวัสดี")
 ```
 
-**วนซ้ำทีละตัวอักษรในสตริง**
+---
+
+## 1. for Loop — วนซ้ำตามจำนวนที่รู้แน่นอน
+
+### โครงสร้างพื้นฐาน
+```python
+for item in sequence:
+    # ทำอะไรบางอย่างกับ item
+```
+
+`for` loop ใช้เมื่อเรารู้ว่าต้องวนกี่รอบ หรือมี "ชุดข้อมูล" ที่จะวนไล่ทีละตัว
+
+### ทำความรู้จัก range()
+
+`range()` คือฟังก์ชันที่สร้างลำดับตัวเลข มี 3 รูปแบบ:
+
+**แบบที่ 1: `range(stop)`** — เริ่มจาก 0 ไปจนถึง (แต่ไม่รวม) stop
+```python
+for i in range(5):
+    print(f"รอบที่ {i}")
+# ผลลัพธ์: 0, 1, 2, 3, 4  (ไม่มี 5 นะ! เพราะไม่รวมตัวสุดท้าย)
+```
+
+**แบบที่ 2: `range(start, stop)`** — เริ่มจาก start ไปจนถึง (ไม่รวม) stop
+```python
+for num in range(1, 11):
+    print(num)
+# ผลลัพธ์: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+```
+
+**แบบที่ 3: `range(start, stop, step)`** — เพิ่มทีละ step
+```python
+for even_num in range(0, 11, 2):
+    print(even_num)
+# ผลลัพธ์: 0, 2, 4, 6, 8, 10  (กระโดดทีละ 2)
+```
+
+> **จุดที่มือใหม่มักพลาด**: `range(1, 5)` จะได้ 1, 2, 3, 4 เท่านั้น **ไม่มี 5** เพราะ stop ไม่ถูกนับรวม ถ้าอยากให้ถึง 5 ต้องเขียน `range(1, 6)`
+
+### วนซ้ำ string ได้ด้วย
 ```python
 my_string = "Python"
 for char in my_string:
     print(f"ตัวอักษร: {char}")
+# ผลลัพธ์: ตัวอักษร: P, ตัวอักษร: y, ตัวอักษร: t, ... (ทีละตัว)
+```
+
+### ตัวอย่างการใช้งานจริง: บวกเลข 1-5
+```python
+total_sum = 0
+for i in range(1, 6):       # 1, 2, 3, 4, 5
+    total_sum += i           # เท่ากับ total_sum = total_sum + i
+print(f"ผลรวม: {total_sum}")  # ผลลัพธ์: 15
 ```
 
 ---
 
-### 2. while Loop
+## 2. while Loop — วนซ้ำจนกว่าเงื่อนไขจะเป็นเท็จ
 
-ใช้เมื่อไม่รู้จำนวนรอบล่วงหน้า แต่รู้ **เงื่อนไข** ที่จะหยุด — ต้องมีการอัปเดตค่าตัวแปรเงื่อนไขทุกครั้ง ไม่เช่นนั้นจะเป็น **infinite loop**
-
+### โครงสร้างพื้นฐาน
 ```python
-# นับถอยหลัง
-count = 5
-while count > 0:
-    print(f"เหลืออีก: {count}")
-    count -= 1   # ขาดบรรทัดนี้ = วนไม่รู้จบ
-print("หมดเวลา!")
+while condition:
+    # ทำงานซ้ำ ตราบใดที่ condition ยังเป็น True
 ```
 
-**ตรวจสอบ input ของผู้ใช้**
+`while` ใช้เมื่อเรา**ไม่รู้ล่วงหน้า**ว่าจะต้องวนกี่รอบ — ขึ้นอยู่กับเงื่อนไข เช่น รอผู้ใช้กรอกค่าที่ถูกต้อง
+
+### ⚠️ กฎเหล็ก 3 ข้อ ที่ต้องมีเสมอ (ไม่งั้น loop จะไม่จบ!)
+1. **Initialization** — ตั้งค่าตัวแปรเริ่มต้นก่อนเข้า loop
+2. **Condition** — เงื่อนไขที่ใช้เช็คว่าจะวนต่อไหม
+3. **Update** — ต้องมีการเปลี่ยนค่าตัวแปรในแต่ละรอบ ไม่งั้นเงื่อนไขจะเป็นจริงตลอดไป
+
+```python
+count = 5          # 1. Initialization
+while count > 0:   # 2. Condition
+    print(f"นับถอยหลัง: {count}")
+    count -= 1      # 3. Update (ถ้าลืมบรรทัดนี้ = infinite loop!)
+print("บึ้ม!")
+```
+
+### ตัวอย่าง: รอผู้ใช้กรอกค่าที่ถูกต้อง (Input Validation)
 ```python
 user_input = ""
 while not (user_input == "yes" or user_input == "no"):
     user_input = input("กรุณาพิมพ์ 'yes' หรือ 'no': ").lower()
-print(f"คุณพิมพ์ว่า: {user_input}")
+print(f"คุณพิมพ์: {user_input}")
+```
+ตรงนี้เราไม่รู้ว่าผู้ใช้จะพิมพ์ถูกตอนไหน — เลยต้องใช้ `while` แทน `for`
+
+### ⚠️ ระวัง Infinite Loop!
+```python
+# อย่าทำแบบนี้! — โค้ดนี้จะวนไม่มีที่สิ้นสุด
+counter = 0
+while counter < 5:
+    print(counter)
+    # ลืมเพิ่มค่า counter! -> counter จะเป็น 0 ตลอดไป -> เงื่อนไขเป็น True ตลอด
 ```
 
 ---
 
-### 3. Loop Control: `break` และ `continue`
+## 3. break และ continue — ควบคุมการวนซ้ำ
 
-- `break` → หยุดลูปทันที
-- `continue` → ข้ามรอบปัจจุบัน ไปรอบถัดไป
-- `while...else` → บล็อก `else` จะทำงานก็ต่อเมื่อลูปจบครบโดย**ไม่มี** `break`
+| คำสั่ง | ความหมาย |
+|---|---|
+| `break` | **หยุด loop ทันที** ออกจาก loop เลย ไม่สนใจรอบที่เหลือ |
+| `continue` | **ข้ามแค่รอบนี้** ไปเริ่มรอบถัดไปเลย (ไม่หยุดทั้ง loop) |
 
+### ตัวอย่าง break: เกมทายเลข
 ```python
 secret_number = 7
 attempts = 0
 max_attempts = 3
 
 while attempts < max_attempts:
-    guess = int(input(f"ทายเลข (1-10) - ครั้งที่ {attempts + 1}/{max_attempts}: "))
+    guess = int(input(f"ทายเลข (ครั้งที่ {attempts + 1}/{max_attempts}): "))
     attempts += 1
+    
     if guess == secret_number:
-        print("ถูกต้อง! ยินดีด้วย")
-        break
+        print("ยินดีด้วย! ทายถูก!")
+        break   # ทายถูกแล้ว ออกจาก loop ทันที ไม่ต้องรอครบ 3 ครั้ง
     elif guess < secret_number:
         print("น้อยไป!")
     else:
         print("มากไป!")
 else:
-    print(f"หมดโอกาสแล้ว เลขลับคือ {secret_number}")
+    # else ของ while จะทำงาน "เฉพาะตอนที่ loop จบโดยไม่มี break"
+    print(f"เสียใจด้วย หมดโอกาสแล้ว เลขลับคือ {secret_number}")
 ```
 
+### ตัวอย่าง continue: แสดงเฉพาะเลขคู่
 ```python
-# continue: แสดงเฉพาะเลขคู่
 for i in range(1, 11):
-    if i % 2 != 0:
-        continue   # ข้ามเลขคี่
+    if i % 2 != 0:      # ถ้าเป็นเลขคี่
+        continue         # ข้ามไปเลย ไม่ print
     print(f"เลขคู่: {i}")
+# ผลลัพธ์: เลขคู่: 2, เลขคู่: 4, เลขคู่: 6, เลขคู่: 8, เลขคู่: 10
 ```
 
 ---
 
-### 4. Nested Loops (ลูปซ้อนลูป)
+## 4. Nested Loops — Loop ซ้อน Loop
 
-ลูปวงในจะวนจนครบก่อน แล้วลูปวงนอกถึงจะขยับไปรอบถัดไป — เหมาะกับงานที่เป็นตาราง/กริด
+Loop ข้างในจะวนจน**ครบทุกรอบ**ก่อน แล้ว loop ข้างนอกถึงจะขยับไปรอบต่อไป เหมาะกับงานที่เกี่ยวกับตาราง, กริด, หรือลวดลาย 2 มิติ
 
+### ตัวอย่าง: สี่เหลี่ยมดอกจัน 5x5
 ```python
-# สี่เหลี่ยมจัตุรัสดอกจัน 5x5
 size = 5
-for row in range(size):
-    for col in range(size):
-        print("* ", end="")
-    print()
+for row in range(size):        # loop นอก = แถว
+    for col in range(size):    # loop ใน = คอลัมน์
+        print("*", end="")     # end="" = ไม่ขึ้นบรรทัดใหม่
+    print()                     # ขึ้นบรรทัดใหม่หลังจบแต่ละแถว
+```
+ผลลัพธ์:
+```
+*****
+*****
+*****
+*****
+*****
 ```
 
+### ตัวอย่าง: สามเหลี่ยมมุมฉาก
 ```python
-# สามเหลี่ยมมุมฉาก
 height = 5
-for row in range(1, height + 1):
-    for col in range(row):
-        print("* ", end="")
+for row in range(1, height + 1):   # แถวที่ 1 ถึง 5
+    for col in range(row):          # แถวที่ N พิมพ์ N ดอกจัน
+        print("*", end="")
     print()
 ```
+ผลลัพธ์:
+```
+*
+**
+***
+****
+*****
+```
 
+### ตัวอย่าง: ตารางสูตรคูณ (การใช้งานจริง)
 ```python
-# ตารางสูตรคูณ 12x12
-for i in range(1, 13):
-    for j in range(1, 13):
-        print(f"{i*j:4d}", end="")
+for i in range(1, 13):           # loop นอก = แถว (1-12)
+    for j in range(1, 13):       # loop ใน = คอลัมน์ (1-12)
+        print(f"{i*j:4d}", end="")  # จัดตำแหน่งให้เป็นระเบียบ
     print()
 ```
 
 ---
 
-### 5. Generators — ทางลัดของ Loop ที่ประหยัดหน่วยความจำ
+## 5. Advanced Topic: Generators (yield) — เสริมความรู้
 
-**Generator function** ใช้ `yield` แทน `return` — ค่าจะถูกสร้าง "ทีละตัวตามที่ขอ" ไม่สร้างทั้ง list ทีเดียว จึงประหยัดหน่วยความจำกว่า
+Generator คือฟังก์ชันพิเศษที่ "คืนค่าทีละตัว" แทนที่จะสร้าง list ทั้งหมดมาเก็บใน memory พร้อมกัน — ประหยัดหน่วยความจำมาก โดยเฉพาะกับข้อมูลจำนวนมากหรือไม่มีที่สิ้นสุด
 
-```python
-def squares_gen():
-    for x in range(10):
-        yield x**2
-
-g = squares_gen()
-print(g)          # <generator object ...> — ยังไม่รันจนกว่าจะถูกดึงค่า
-print(next(g))    # 0
-print(next(g))    # 1
-```
-
-**Generator expression** — เหมือน list comprehension แต่ใช้วงเล็บ `()` แทน `[]`
-```python
-gen = (x**2 for x in range(10))
-print(sum(gen))   # 285 — คำนวณค่าทีละตัว ไม่เก็บ list เต็มไว้ในหน่วยความจำ
-```
-
-**เชื่อมกับเรื่อง loop: generator ก็ใช้ `for` วนได้เหมือน list**
-```python
-for val in (x**2 for x in range(5)):
-    print("ได้ค่า:", val)
-```
-
-**Infinite sequence** — จุดที่ generator ต่างจาก list ชัดที่สุด: ลูป `while True` + `yield` สร้างลำดับที่ไม่มีวันจบได้ โดยไม่ทำให้โปรแกรมค้าง (ตราบใดที่ไม่ดึงค่าจนหมด)
-
-```python
-def integers_from(n):
-    while True:
-        yield n
-        n += 1
-
-nums = integers_from(1)
-first_five = [next(nums) for _ in range(5)]
-print(first_five)   # [1, 2, 3, 4, 5]
-```
-
-**Fibonacci ด้วย generator** (ตัวอย่างคลาสสิกที่โชว์พลังของ `while True` + `yield`)
 ```python
 def fibonacci():
     a, b = 1, 1
-    while True:
-        yield a
+    while True:          # วนไม่มีที่สิ้นสุด!
+        yield a           # คืนค่า a แล้ว "หยุดรอ" ตรงนี้ จนกว่าจะถูกเรียกอีกครั้ง
         a, b = b, a + b
 
+# ดึงมาแค่ 10 ตัวแรก ด้วย islice (ไม่งั้นจะวนไม่จบ)
 from itertools import islice
 first_ten = list(islice(fibonacci(), 10))
-print(first_ten)   # [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+print(first_ten)
+# ผลลัพธ์: [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
 ```
 
----
-
-### สรุปจุดเชื่อมสำคัญของสัปดาห์นี้
-
-Loop (`for`/`while`) คือกลไกควบคุมการทำงานซ้ำ ส่วน **Generator เป็นการนำแนวคิดของ loop มาห่อไว้ในฟังก์ชันที่ "จำสถานะ" ของตัวเองได้** — แทนที่จะรันลูปแล้วเก็บผลทุกตัวลง list ทันที (`return`) generator จะ "หยุดพัก" ที่ `yield` แล้วค่อยทำงานต่อเมื่อถูกเรียก `next()` อีกครั้ง ทำให้สามารถสร้างลำดับที่ยาวมาก หรือไม่มีที่สิ้นสุดได้ โดยใช้หน่วยความจำคงที่
+**จุดสำคัญ**: `yield` ต่างจาก `return` ตรงที่ฟังก์ชันจะ "หยุดชั่วคราว" แล้วค่อยทำงานต่อจากจุดเดิมในครั้งถัดไปที่ถูกเรียก ไม่ใช่เริ่มใหม่ทั้งหมด
