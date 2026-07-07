@@ -1,4 +1,4 @@
-## Week 3 Snapshot · Code Snippets (ภาษาไทย)
+## Week 3 Snapshot · Code Snippets
 **Control Flow: Loops + Generators**
 
 ### 1. for Loop กับ `range()`
