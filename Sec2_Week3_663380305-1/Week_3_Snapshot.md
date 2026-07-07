@@ -223,3 +223,12 @@ print(first_ten)
 ```
 
 **จุดสำคัญ**: `yield` ต่างจาก `return` ตรงที่ฟังก์ชันจะ "หยุดชั่วคราว" แล้วค่อยทำงานต่อจากจุดเดิมในครั้งถัดไปที่ถูกเรียก ไม่ใช่เริ่มใหม่ทั้งหมด
+
+## 🔗 เนื้อหาที่เกี่ยวข้อง
+
+- 📄 [Week 3: Control Flow: Loops (PDF)](./papers/Week%203_%20Control%20Flow_%20Loops.pdf)
+- 📄 [Advanced: Generators (PDF)](./papers/p3.%20Generators.pdf)
+- 📓 [Lab3.ipynb](./Lab3.ipynb)
+- 📝 [Recap Week 2](./Recap_Week2_663380518_4.md)
+
+---
