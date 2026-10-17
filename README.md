@@ -36,8 +36,28 @@ Repository นี้จัดทำขึ้นเพื่อใช้สำห
 
 ```text
 .
+├── Class_activity/
 ├── Sec2_Week1_663380305-1/
 ├── Sec2_Week2_663380305-1/
 ├── Sec2_Week3_663380305-1/
+├── Sec2_Week4_663380305-1/
+├── Sec2_Week5_663380305-1/
+├── Sec2_Week6_663380305-1/
+├── Sec2_Week7_663380305-1/
+├── Sec2_Week8_663380305-1/
+├── Sec2_Week10_663380305-1/
+├── Sec2_Week11_663380305-1/
+├── Sec2_Week12_663380305-1/
 └── README.md
 ```
+
+## Tools & Environment
+
+- Python 3.x
+- Jupyter Notebook
+- Visual Studio Code
+
+## How to Run
+
+- ไฟล์ `.ipynb` ให้เปิดด้วย Jupyter Notebook หรือ VS Code
+- ไฟล์ `.py` ให้รันด้วยคำสั่ง `python <ชื่อไฟล์>.py`
