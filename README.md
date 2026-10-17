@@ -135,5 +135,15 @@ Repository นี้จัดเก็บงานตาม **สัปดาห
 
 ## How to Run
 
+**Week 1–6** (`.ipynb` / `.py`)
 - ไฟล์ `.ipynb` ให้เปิดด้วย Jupyter Notebook หรือ VS Code
 - ไฟล์ `.py` ให้รันด้วยคำสั่ง `python <ชื่อไฟล์>.py`
+
+**Week 7 เป็นต้นไป และ Class Activity** (โปรเจคที่มี `main.py`)
+```bash
+cd <โฟลเดอร์ของ Lab>
+pip install -r requirements.txt   # ถ้ามีไฟล์นี้
+python main.py
+```
+
+> Lab ที่มีไฟล์ `.env.example` (เช่น Week 12 Basic) ให้คัดลอกเป็น `.env` แล้วกรอกค่า API key ของตัวเองก่อนรัน
