@@ -53,7 +53,7 @@ Repository นี้จัดทำขึ้นเพื่อใช้สำห
 
 ## Tools & Environment
 
-- Python 3.x
+- Python 3.10.20
 - Jupyter Notebook
 - Visual Studio Code
 
