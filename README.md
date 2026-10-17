@@ -35,6 +35,9 @@ Repository นี้จัดทำขึ้นเพื่อใช้สำห
 ## Repository Structure
 
 ```text
+## Repository Structure
+
+```text
 .
 ├── Class_activity/
 ├── Sec2_Week1_663380305-1/
@@ -44,11 +47,24 @@ Repository นี้จัดทำขึ้นเพื่อใช้สำห
 ├── Sec2_Week5_663380305-1/
 ├── Sec2_Week6_663380305-1/
 ├── Sec2_Week7_663380305-1/
+│   ├── AD1-LabX-ADV_-Advanced-Web-Scraping-Introduction-to-Automated-Agents/
+│   └── LabsX_Basic1-Introduction-to-Web-Scraping/
 ├── Sec2_Week8_663380305-1/
+│   ├── agentic-data-processor/
+│   └── data-processor/
 ├── Sec2_Week10_663380305-1/
+│   ├── Advanced-Spreadsheet-Automation-Agentic/
+│   └── spreadsheet-automator/
 ├── Sec2_Week11_663380305-1/
+│   ├── Project-Planning-Design-Building-an-Enhanced-Task-Manager/
+│   └── document-automator/
 ├── Sec2_Week12_663380305-1/
+│   ├── Lab_ADV_Agentic_Communication_Workflows_Advanced_Email_And_SMS/
+│   └── Lab_BASIC_email-sms-automator/
 └── README.md
+```
+
+> **หมายเหตุ:** ตั้งแต่ Week 7 เป็นต้นไป แต่ละสัปดาห์แบ่งเป็นโฟลเดอร์ย่อย 2 โฟลเดอร์ คือ Lab Basic และ Lab Advance
 ```
 
 ## Tools & Environment
